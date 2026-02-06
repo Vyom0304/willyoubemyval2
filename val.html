@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Be My Valentine 💖</title>
+
+  <!-- iOS friendly -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes floatParticle {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-100vh) translateX(var(--drift)) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes sparkle {
+
+      0%,
+      100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -1000px 0;
+      }
+
+      100% {
+        background-position: 1000px 0;
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 0.9;
+      }
+
+      to {
+        transform: translateY(-800px) translateX(var(--drift-x, 0)) rotate(405deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0.5) rotate(-5deg);
+        opacity: 0;
+      }
+
+      60% {
+        transform: scale(1.08) rotate(2deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+
+    @keyframes gentleFloat {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    @keyframes glow {
+
+      0%,
+      100% {
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25), 0 0 40px rgba(255, 77, 109, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3), 0 0 60px rgba(255, 77, 109, 0.6);
+      }
+    }
+
+    @keyframes heartBeat {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      10%,
+      30% {
+        transform: scale(1.1);
+      }
+
+      20%,
+      40% {
+        transform: scale(0.95);
+      }
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #FFB6D9, #FFC2E2, #FFD4F0, #FFE1F5, #FFF0F9, #FFB8E0);
+      background-size: 300% 300%;
+      animation: gradientShift 8s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+    }
+
+    /* Floating rose petals */
+    .particle {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: radial-gradient(circle, #ff758c, #ff4d6d);
+      border-radius: 50% 0 50% 50%;
+      animation: floatParticle 12s infinite ease-in-out;
+      opacity: 0;
+      --drift: 0px;
+    }
+
+    /* Sparkles */
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      animation: sparkle 2s infinite ease-in-out;
+      box-shadow: 0 0 6px #fff;
+    }
+
+    .card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 250, 252, 0.95));
+      border-radius: 32px;
+      padding: 48px 32px;
+      width: 92%;
+      max-width: 450px;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      animation: pop 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55), gentleFloat 3s ease-in-out infinite, glow 3s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    h1 {
+      background: linear-gradient(135deg, #E91E63, #F06292, #F48FB1);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      animation: heartBeat 1.5s ease-in-out infinite;
+      text-shadow: 2px 2px 4px rgba(255, 77, 109, 0.2);
+      position: relative;
+      font-family: 'Playfair Display', serif;
+    }
+
+    p {
+      color: #555;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin-bottom: 32px;
+      font-weight: 400;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.5s forwards;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 18px 36px;
+      border-radius: 50px;
+      border: none;
+      font-size: 1.15rem;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    button:hover {
+      transform: scale(1.08) translateY(-3px);
+    }
+
+    .yes {
+      background: linear-gradient(135deg, #ff4d6d, #ff758c, #ff8fa3);
+      background-size: 200% 200%;
+      animation: gradientShift 3s ease infinite, pulse 2s ease-in-out infinite;
+      color: white;
+      box-shadow: 0 12px 30px rgba(255, 77, 109, 0.6), 0 0 40px rgba(255, 77, 109, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .yes:hover {
+      box-shadow: 0 16px 40px rgba(255, 77, 109, 0.8), 0 0 60px rgba(255, 77, 109, 0.6);
+    }
+
+    .no {
+      background: linear-gradient(135deg, #f5f5f5, #fff);
+      color: #555;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      border: 2px solid rgba(255, 77, 109, 0.2);
+    }
+
+    .no:hover {
+      background: linear-gradient(135deg, #fff, #ffe8ec);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .success {
+      display: none;
+    }
+
+    .success h1 {
+      font-size: 3rem;
+      animation: heartBeat 1s ease-in-out infinite, pulse 2s ease-in-out infinite;
+    }
+
+    .success p {
+      font-size: 1.4rem;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .heart {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      background: linear-gradient(135deg, #ff4d6d, #ff758c);
+      transform: rotate(45deg);
+      animation: float 6s linear forwards;
+      opacity: 0;
+      filter: drop-shadow(0 0 8px rgba(255, 77, 109, 0.6));
+      --drift-x: 0px;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 22px;
+      height: 22px;
+      background: linear-gradient(135deg, #ff4d6d, #ff758c);
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before {
+      top: -11px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -11px;
+      top: 0;
+    }
+
+    /* Success confetti hearts */
+    @keyframes confetti {
+      0% {
+        transform: translateY(-100px) rotate(0deg) scale(0);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(100vh) rotate(720deg) scale(1);
+        opacity: 0;
+      }
+    }
+
+    .confetti-heart {
+      position: absolute;
+      animation: confetti 4s ease-in forwards;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card" id="questionCard">
+    <h1 id="title">Hey Love 💕</h1>
+    <p id="message">
+      Will you be my Valentine? 💘
+    </p>
+
+    <div class="buttons">
+      <button class="yes" onclick="yesClicked()">Yes 💖</button>
+      <button class="no" onclick="noClicked()">No 🙈</button>
+    </div>
+  </div>
+
+  <div class="card success" id="successCard">
+    <h1>YAYYY 🥰💞</h1>
+    <p>
+      I knew it ❤️<br>
+      You just made me the happiest person ever.
+    </p>
+    <p>Happy Valentine's Day 💐</p>
+  </div>
+
+  <script>
+    const messages = [
+      "Are you sure? 🥺",
+      "Think again 💭💖",
+      "Pleaseee? 🥹",
+      "This would make me really happy 🥰",
+      "Don't break my heart 💔",
+      "Last chance… 😶‍🌫️",
+      "Okay but… what if we say yes? 😏",
+      "You know you want to 💕"
+    ];
+
+    let index = 0;
+
+    // Create floating rose petals
+    function createParticles() {
+      for (let i = 0; i < 25; i++) {
+        const particle = document.createElement("div");
+        particle.className = "particle";
+        particle.style.left = Math.random() * 100 + "vw";
+        particle.style.setProperty('--drift', (Math.random() - 0.5) * 200 + 'px');
+        particle.style.animationDelay = Math.random() * 12 + "s";
+        particle.style.animationDuration = (Math.random() * 8 + 10) + "s";
+        document.body.appendChild(particle);
+      }
+    }
+
+    // Create sparkles
+    function createSparkles() {
+      for (let i = 0; i < 40; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+        sparkle.style.left = Math.random() * 100 + "vw";
+        sparkle.style.top = Math.random() * 100 + "vh";
+        sparkle.style.animationDelay = Math.random() * 2 + "s";
+        sparkle.style.animationDuration = (Math.random() * 2 + 1.5) + "s";
+        document.body.appendChild(sparkle);
+      }
+    }
+
+    // Initialize particles and sparkles
+    createParticles();
+    createSparkles();
+
+    function noClicked() {
+      index = (index + 1) % messages.length;
+      const messageEl = document.getElementById("message");
+
+      // Fade out
+      messageEl.style.opacity = "0";
+      messageEl.style.transform = "translateY(-10px)";
+
+      setTimeout(() => {
+        messageEl.textContent = messages[index];
+        // Fade in
+        messageEl.style.opacity = "1";
+        messageEl.style.transform = "translateY(0)";
+      }, 300);
+
+      // Enhanced shake animation
+      const card = document.getElementById("questionCard");
+      card.style.animation = "none";
+      setTimeout(() => {
+        card.style.transform = "translateX(-8px) rotate(-2deg)";
+      }, 10);
+      setTimeout(() => card.style.transform = "translateX(8px) rotate(2deg)", 100);
+      setTimeout(() => card.style.transform = "translateX(-6px) rotate(-1deg)", 200);
+      setTimeout(() => card.style.transform = "translateX(6px) rotate(1deg)", 300);
+      setTimeout(() => {
+        card.style.transform = "translateX(0) rotate(0deg)";
+        card.style.animation = "gentleFloat 3s ease-in-out infinite, glow 3s ease-in-out infinite";
+      }, 400);
+    }
+
+    function yesClicked() {
+      const questionCard = document.getElementById("questionCard");
+      const successCard = document.getElementById("successCard");
+
+      // Smooth transition
+      questionCard.style.transform = "scale(0.8) rotate(5deg)";
+      questionCard.style.opacity = "0";
+
+      setTimeout(() => {
+        questionCard.style.display = "none";
+        successCard.style.display = "block";
+        createHearts();
+        createConfetti();
+      }, 400);
+    }
+
+    function createHearts() {
+      for (let i = 0; i < 50; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.setProperty('--drift-x', (Math.random() - 0.5) * 200 + 'px');
+        heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+        heart.style.animationDelay = (Math.random() * 2) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 8000);
+      }
+    }
+
+    function createConfetti() {
+      const colors = ['#ff4d6d', '#ff758c', '#ff8fa3', '#ffa8b9', '#c06c84'];
+      for (let i = 0; i < 60; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "heart confetti-heart";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.top = "-50px";
+        confetti.style.animationDelay = (Math.random() * 0.5) + "s";
+        confetti.style.animationDuration = (Math.random() * 2 + 3) + "s";
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.background = color;
+        if (confetti.querySelector) {
+          const before = confetti.querySelector('::before');
+          const after = confetti.querySelector('::after');
+        }
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+
+    // Add continuous gentle hearts in background
+    setInterval(() => {
+      if (document.getElementById("successCard").style.display === "block") {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.setProperty('--drift-x', (Math.random() - 0.5) * 100 + 'px');
+        heart.style.animationDuration = (Math.random() * 3 + 5) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 8000);
+      }
+    }, 300);
+  </script>
+
+</body>
+
+</html>
